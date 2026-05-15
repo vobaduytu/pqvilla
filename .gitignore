@@ -1,0 +1,15 @@
+# Ignore original large backgrounds (already copied to images/hero/)
+background.png
+background2.png
+background3.png
+
+# Template reference
+template.png
+
+# Design spec
+luxury_nhom_kinh_website_design_spec.md
+
+# OS files
+Thumbs.db
+.DS_Store
+desktop.ini

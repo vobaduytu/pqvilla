@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="PQ VILLA - Sản phẩm nhôm kính cao cấp: cửa mở quay, cửa lùa, cửa xếp trượt, vách kính, mặt dựng.">
+  <title>Sản Phẩm - PQ VILLA</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* === PRODUCTS PAGE STYLES === */
+    .page-header {
+      padding: 140px 0 60px;
+      background: var(--bg-secondary);
+      text-align: center;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .page-header h1 {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .page-header p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .breadcrumb a {
+      color: var(--accent);
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    /* Product List Grid */
+    .product-list {
+      padding: 80px 0;
+    }
+
+    .product-list-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    /* === MỖI SẢN PHẨM CARD - COPY BLOCK NÀY ĐỂ THÊM SẢN PHẨM MỚI === */
+    .product-item {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .product-item:hover {
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: var(--gold-glow);
+    }
+
+    .product-item-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    .product-item-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .product-item:hover .product-item-img img {
+      transform: scale(1.06);
+    }
+
+    .product-item-info {
+      padding: 20px;
+    }
+
+    .product-item-info h3 {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .product-item-info p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      /* Giới hạn 3 dòng để không bị tràn */
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-item-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(200, 155, 94, 0.15);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============ NAVBAR (giống index.html) ============ -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">PQ</div>
+        <div class="logo-text">PQ VILLA<span>ALUMINIUM & GLASS</span></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Trang Chủ</a></li>
+        <li><a href="index.html#about">Giới Thiệu</a></li>
+        <li><a href="products.html" class="active">Sản Phẩm</a></li>
+        <li><a href="index.html#projects">Dự Án</a></li>
+        <li><a href="index.html#contact">Liên Hệ</a></li>
+      </ul>
+      <a href="tel:0000000000" class="nav-phone"><i class="fas fa-phone-alt"></i> 0XXX XXX XXX</a>
+      <div class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="close-menu" id="closeMenu">&times;</div>
+    <a href="index.html">Trang Chủ</a>
+    <a href="index.html#about">Giới Thiệu</a>
+    <a href="products.html">Sản Phẩm</a>
+    <a href="index.html#projects">Dự Án</a>
+    <a href="index.html#contact">Liên Hệ</a>
+  </div>
+
+  <!-- ============ PAGE HEADER ============ -->
+  <section class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Trang Chủ</a>
+        <span>/</span>
+        <span>Sản Phẩm</span>
+      </div>
+      <h1>Tất Cả Sản Phẩm</h1>
+      <p>Chuyên cung cấp các giải pháp nhôm kính cao cấp cho mọi công trình</p>
+    </div>
+  </section>
+
+  <!-- ============ PRODUCT LIST ============ -->
+  <section class="product-list">
+    <div class="container">
+      <div class="product-list-grid">
+
+        <!-- ========== SẢN PHẨM 1 ========== -->
+        <!-- HƯỚNG DẪN: Copy từ dòng "SẢN PHẨM" đến "/SẢN PHẨM" để thêm sản phẩm mới -->
+        <div class="product-item">
+          <div class="product-item-img">
+            <img src="images/products/cua-mo-quay.png" alt="Cửa Mở Quay Nhôm Cao Cấp">
+          </div>
+          <div class="product-item-info">
+            <span class="product-item-tag">CỬA NHÔM</span>
+            <h3>Cửa Mở Quay Nhôm Cao Cấp</h3>
+            <p>Hệ cửa mở quay nhôm cao cấp với thiết kế hiện đại, độ bền vượt trội, phù hợp cho biệt thự và nhà phố.</p>
+          </div>
+        </div>
+        <!-- /SẢN PHẨM 1 -->
+
+        <!-- ========== SẢN PHẨM 2 ========== -->
+        <div class="product-item">
+          <div class="product-item-img">
+            <img src="images/products/cua-lua.png" alt="Cửa Lùa Nhôm Kính">
+          </div>
+          <div class="product-item-info">
+            <span class="product-item-tag">CỬA NHÔM</span>
+            <h3>Cửa Lùa Nhôm Kính</h3>
+            <p>Cửa lùa vận hành êm ái, tiết kiệm không gian, thích hợp cho phòng khách và ban công.</p>
+          </div>
+        </div>
+        <!-- /SẢN PHẨM 2 -->
+
+        <!-- ========== SẢN PHẨM 3 ========== -->
+        <div class="product-item">
+          <div class="product-item-img">
+            <img src="images/products/cua-xep-truot.png" alt="Cửa Xếp Trượt">
+          </div>
+          <div class="product-item-info">
+            <span class="product-item-tag">CỬA NHÔM</span>
+            <h3>Cửa Xếp Trượt</h3>
+            <p>Không gian mở rộng tối đa, thẩm mỹ cao, phù hợp cho sảnh lớn, nhà hàng, biệt thự.</p>
+          </div>
+        </div>
+        <!-- /SẢN PHẨM 3 -->
+
+        <!-- ========== SẢN PHẨM 4 ========== -->
+        <div class="product-item">
+          <div class="product-item-img">
+            <img src="images/products/vach-kinh.png" alt="Vách Kính Văn Phòng">
+          </div>
+          <div class="product-item-info">
+            <span class="product-item-tag">VÁCH KÍNH</span>
+            <h3>Vách Kính Văn Phòng</h3>
+            <p>Giải pháp tối ưu cho văn phòng, nhà ở hiện đại với kính cường lực an toàn.</p>
+          </div>
+        </div>
+        <!-- /SẢN PHẨM 4 -->
+
+        <!-- ========== SẢN PHẨM 5 ========== -->
+        <div class="product-item">
+          <div class="product-item-img">
+            <img src="images/products/mat-dung.png" alt="Mặt Dựng Nhôm Kính">
+          </div>
+          <div class="product-item-info">
+            <span class="product-item-tag">MẶT DỰNG</span>
+            <h3>Mặt Dựng Nhôm Kính</h3>
+            <p>Thi công mặt dựng chuyên nghiệp, nâng tầm đẳng cấp công trình thương mại và dân dụng.</p>
+          </div>
+        </div>
+        <!-- /SẢN PHẨM 5 -->
+
+        <!--
+        ============================================================
+        HƯỚNG DẪN THÊM SẢN PHẨM MỚI:
+        
+        1. Copy block bên dưới
+        2. Dán vào TRƯỚC dòng "KẾT THÚC DANH SÁCH"
+        3. Thay đổi: src ảnh, alt, tag, tên, mô tả
+        4. Ảnh nên đặt trong thư mục images/products/
+        5. Kích thước ảnh khuyến nghị: 600x450px
+        
+        <div class="product-item">
+          <div class="product-item-img">
+            <img src="images/products/TEN-FILE-ANH.png" alt="Tên sản phẩm">
+          </div>
+          <div class="product-item-info">
+            <span class="product-item-tag">DANH MỤC</span>
+            <h3>Tên Sản Phẩm</h3>
+            <p>Mô tả ngắn về sản phẩm, tối đa 2-3 dòng.</p>
+          </div>
+        </div>
+        
+        ============================================================
+        -->
+
+        <!-- KẾT THÚC DANH SÁCH SẢN PHẨM -->
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA SECTION ============ -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-text">
+        <h3>Bạn cần tư vấn thêm về sản phẩm?</h3>
+        <p>Liên hệ ngay để được tư vấn và nhận báo giá tốt nhất!</p>
+      </div>
+      <div class="cta-buttons">
+        <a href="#" class="btn-dark" onclick="openModal(); return false;">NHẬN TƯ VẤN NGAY</a>
+        <a href="tel:0000000000" class="btn-dark-outline"><i class="fas fa-phone-alt"></i> 0XXX XXX XXX</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-about">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">PQ</div>
+            <div class="logo-text">PQ VILLA<span>ALUMINIUM & GLASS</span></div>
+          </a>
+          <p>Chuyên thiết kế và thi công các hạng mục nhôm kính cao cấp cho nhà phố, biệt thự, dự án, văn phòng, khách
+            sạn.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Về Chúng Tôi</h4>
+          <a href="#">Giới thiệu</a>
+          <a href="#">Tầm nhìn sứ mệnh</a>
+          <a href="#">Đội ngũ nhân sự</a>
+          <a href="#">Xưởng sản xuất</a>
+        </div>
+        <div class="footer-col">
+          <h4>Sản Phẩm</h4>
+          <a href="#">Cửa mở quay</a>
+          <a href="#">Cửa lùa</a>
+          <a href="#">Cửa xếp trượt</a>
+          <a href="#">Vách kính</a>
+          <a href="#">Mặt dựng</a>
+        </div>
+        <div class="footer-col">
+          <h4>Hỗ Trợ</h4>
+          <a href="#">Chính sách bảo hành</a>
+          <a href="#">Hướng dẫn sử dụng</a>
+          <a href="#">Thanh toán</a>
+          <a href="#">Câu hỏi thường gặp</a>
+        </div>
+        <div class="footer-col">
+          <h4>Liên Hệ</h4>
+          <div class="footer-contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <p>Địa chỉ sẽ được cập nhật</p>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-envelope"></i>
+            <p>email@pqvilla.com</p>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <p>0XXX XXX XXX</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 PQ VILLA. All rights reserved.</p>
+        <p>Thiết kế bởi PQ VILLA Team</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ CONTACT MODAL ============ -->
+  <div class="modal-overlay" id="contactModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div class="modal-icon"><i class="fas fa-phone-alt"></i></div>
+      <h3>Liên hệ tư vấn</h3>
+      <p>Gọi ngay cho chúng tôi để được tư vấn miễn phí về giải pháp nhôm kính cao cấp!</p>
+      <div class="modal-phone">0XXX XXX XXX</div>
+      <a href="tel:0000000000" class="btn-gold modal-call-btn"><i class="fas fa-phone-alt"></i> GỌI NGAY</a>
+    </div>
+  </div>
+
+  <!-- ============ IMAGE LIGHTBOX ============ -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close">&times;</button>
+    <img src="" alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+
+  <button class="back-to-top visible" id="backToTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

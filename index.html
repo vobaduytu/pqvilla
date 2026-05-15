@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="PQ VILLA - Chuyên thiết kế, thi công nhôm kính cao cấp cho biệt thự, nhà phố, văn phòng. Cam kết chất lượng, tiến độ, bền đẹp với thời gian.">
+  <meta name="keywords" content="nhôm kính, cửa nhôm, vách kính, mặt dựng, PQ VILLA, nhôm kính cao cấp">
+  <title>PQ VILLA - Giải Pháp Nhôm Kính Cao Cấp</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="logo">
+        <div class="logo-icon">PQ</div>
+        <div class="logo-text">PQ VILLA<span>ALUMINIUM & GLASS</span></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#home" class="active">Trang Chủ</a></li>
+        <li><a href="#about">Giới Thiệu</a></li>
+        <li><a href="#products">Sản Phẩm</a></li>
+        <li><a href="#projects">Dự Án</a></li>
+        <li><a href="#contact">Liên Hệ</a></li>
+      </ul>
+      <a href="tel:0000000000" class="nav-phone"><i class="fas fa-phone-alt"></i> 0XXX XXX XXX</a>
+      <div class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="close-menu" id="closeMenu">&times;</div>
+    <a href="#home">Trang Chủ</a>
+    <a href="#about">Giới Thiệu</a>
+    <a href="#products">Sản Phẩm</a>
+    <a href="#projects">Dự Án</a>
+    <a href="#contact">Liên Hệ</a>
+    <a href="tel:0000000000" class="nav-phone"><i class="fas fa-phone-alt"></i> 0XXX XXX XXX</a>
+  </div>
+
+  <!-- ============ HERO SECTION ============ -->
+  <section class="hero" id="home">
+    <div class="hero-slider">
+      <div class="hero-slide active" style="background-image: url('images/hero/hero-1.png')"></div>
+      <div class="hero-slide" style="background-image: url('images/hero/hero-2.png')"></div>
+      <div class="hero-slide" style="background-image: url('images/hero/hero-3.png')"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <h1>GIẢI PHÁP<span class="gold">NHÔM KÍNH CAO CẤP</span>CHO MỌI CÔNG TRÌNH</h1>
+        <p>Chuyên thiết kế, thi công các hạng mục nhôm kính cao cấp: cửa nhôm, cửa kính, vách kính, mặt dựng... Cam kết
+          chất lượng – Tiến độ – Bền đẹp với thời gian.</p>
+        <div class="hero-buttons">
+          <a href="#" class="btn-gold" onclick="openModal(); return false;">NHẬN BÁO GIÁ <i
+              class="fas fa-arrow-right"></i></a>
+          <a href="#projects" class="btn-outline">XEM DỰ ÁN</a>
+        </div>
+      </div>
+    </div>
+    <button class="hero-arrow prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+    <button class="hero-arrow next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+    <div class="hero-dots">
+      <span class="dot active" data-slide="0"></span>
+      <span class="dot" data-slide="1"></span>
+      <span class="dot" data-slide="2"></span>
+    </div>
+  </section>
+
+  <!-- ============ PRODUCTS SECTION ============ -->
+  <section class="products" id="products">
+    <div class="container">
+      <div class="section-label fade-up">SẢN PHẨM</div>
+      <h2 class="section-title fade-up">Danh mục sản phẩm</h2>
+      <div class="products-grid">
+        <div class="product-card fade-up delay-1">
+          <div class="product-img"><img src="images/products/cua-mo-quay.png" alt="Cửa mở quay" loading="lazy"></div>
+          <div class="product-icon"><i class="fas fa-door-open"></i></div>
+          <h3>Cửa Mở Quay</h3>
+          <p>Hệ dáng hệ nhôm cao cấp, độ bền vượt trội</p>
+        </div>
+        <div class="product-card fade-up delay-2">
+          <div class="product-img"><img src="images/products/cua-lua.png" alt="Cửa lùa" loading="lazy"></div>
+          <div class="product-icon"><i class="fas fa-arrows-alt-h"></i></div>
+          <h3>Cửa Lùa</h3>
+          <p>Vận hành êm ái, tiết kiệm không gian</p>
+        </div>
+        <div class="product-card fade-up delay-3">
+          <div class="product-img"><img src="images/products/cua-xep-truot.png" alt="Cửa xếp trượt" loading="lazy">
+          </div>
+          <div class="product-icon"><i class="fas fa-compress-arrows-alt"></i></div>
+          <h3>Cửa Xếp Trượt</h3>
+          <p>Không gian mở rộng, thẩm mỹ cao</p>
+        </div>
+        <div class="product-card fade-up delay-4">
+          <div class="product-img"><img src="images/products/vach-kinh.png" alt="Vách kính" loading="lazy"></div>
+          <div class="product-icon"><i class="fas fa-th-large"></i></div>
+          <h3>Vách Kính</h3>
+          <p>Giải pháp tối ưu cho văn phòng, nhà ở</p>
+        </div>
+        <div class="product-card fade-up delay-4">
+          <div class="product-img"><img src="images/products/mat-dung.png" alt="Mặt dựng" loading="lazy"></div>
+          <div class="product-icon"><i class="fas fa-building"></i></div>
+          <h3>Mặt Dựng</h3>
+          <p>Thi công chuyên nghiệp, đẳng cấp công trình</p>
+        </div>
+      </div>
+      <a href="products.html" class="btn-outline">XEM TẤT CẢ SẢN PHẨM</a>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS SECTION ============ -->
+  <section class="projects" id="projects">
+    <div class="container">
+      <div class="section-label fade-up">DỰ ÁN</div>
+      <h2 class="section-title fade-up">Một số công trình tiêu biểu</h2>
+      <div class="project-filters fade-up">
+        <button class="filter-btn active" data-filter="all">Tất Cả</button>
+        <button class="filter-btn" data-filter="nha-pho">Nhà Phố</button>
+        <button class="filter-btn" data-filter="biet-thu">Biệt Thự</button>
+        <button class="filter-btn" data-filter="chung-cu">Chung Cư</button>
+        <button class="filter-btn" data-filter="van-phong">Văn Phòng</button>
+        <button class="filter-btn" data-filter="khach-san">Khách Sạn</button>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card fade-up delay-1" data-category="biet-thu">
+          <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&h=450&fit=crop"
+            alt="Biệt thự Vinhomes Riverside" loading="lazy">
+          <div class="project-overlay">
+            <h4>Biệt thự Vinhomes Riverside</h4><span>Hà Nội</span>
+          </div>
+        </div>
+        <div class="project-card fade-up delay-2" data-category="nha-pho">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=450&fit=crop"
+            alt="Nhà phố 5x20 - Quảng Bình" loading="lazy">
+          <div class="project-overlay">
+            <h4>Nhà phố 5x20 - Quảng Bình</h4><span>Quảng Bình</span>
+          </div>
+        </div>
+        <div class="project-card fade-up delay-3" data-category="van-phong">
+          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=450&fit=crop"
+            alt="Tòa nhà văn phòng - Đà Nẵng" loading="lazy">
+          <div class="project-overlay">
+            <h4>Tòa nhà văn phòng - Đà Nẵng</h4><span>Đà Nẵng</span>
+          </div>
+        </div>
+        <div class="project-card fade-up delay-4" data-category="khach-san">
+          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=450&fit=crop"
+            alt="Khách sạn The Sea" loading="lazy">
+          <div class="project-overlay">
+            <h4>Khách sạn The Sea</h4><span>Nha Trang</span>
+          </div>
+        </div>
+        <div class="project-card fade-up delay-1" data-category="biet-thu">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=450&fit=crop"
+            alt="Villa FLC - Sầm Sơn" loading="lazy">
+          <div class="project-overlay">
+            <h4>Villa FLC - Sầm Sơn</h4><span>Thanh Hóa</span>
+          </div>
+        </div>
+        <div class="project-card fade-up delay-2" data-category="chung-cu">
+          <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=450&fit=crop"
+            alt="Chung cư The Emerald" loading="lazy">
+          <div class="project-overlay">
+            <h4>Chung cư The Emerald</h4><span>Hà Nội</span>
+          </div>
+        </div>
+        <div class="project-card fade-up delay-3" data-category="nha-pho">
+          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=450&fit=crop"
+            alt="Nhà phố hiện đại - Đồng Hới" loading="lazy">
+          <div class="project-overlay">
+            <h4>Nhà phố hiện đại - Đồng Hới</h4><span>Quảng Bình</span>
+          </div>
+        </div>
+        <div class="project-card fade-up delay-4" data-category="van-phong">
+          <img src="https://images.unsplash.com/photo-1577495508048-b635879837f1?w=600&h=450&fit=crop"
+            alt="Showroom BMW Lê Văn Lương" loading="lazy">
+          <div class="project-overlay">
+            <h4>Showroom BMW Lê Văn Lương</h4><span>Hà Nội</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS SECTION ============ -->
+  <section class="stats" id="about">
+    <div class="container">
+      <div class="section-label fade-up">TẠI SAO CHỌN CHÚNG TÔI</div>
+      <h2 class="section-title fade-up">Uy tín tạo nên thương hiệu</h2>
+      <div class="stats-grid">
+        <div class="stat-item fade-up delay-1">
+          <div class="stat-icon"><i class="fas fa-clock"></i></div>
+          <div class="stat-number" data-target="10">0</div>
+          <div class="stat-suffix">+ NĂM</div>
+          <div class="stat-label">KINH NGHIỆM</div>
+          <p class="stat-desc">Hơn 10 năm trong lĩnh vực thi công nhôm kính</p>
+        </div>
+        <div class="stat-item fade-up delay-2">
+          <div class="stat-icon"><i class="fas fa-city"></i></div>
+          <div class="stat-number" data-target="500">0</div>
+          <div class="stat-suffix">+</div>
+          <div class="stat-label">CÔNG TRÌNH</div>
+          <p class="stat-desc">Đã hoàn thành hơn 500+ công trình lớn nhỏ</p>
+        </div>
+        <div class="stat-item fade-up delay-3">
+          <div class="stat-icon"><i class="fas fa-award"></i></div>
+          <div class="stat-number" data-target="100">0</div>
+          <div class="stat-suffix">%</div>
+          <div class="stat-label">SẢN PHẨM CHẤT LƯỢNG</div>
+          <p class="stat-desc">Nhôm chính hãng, phụ kiện đồng bộ cao cấp</p>
+        </div>
+        <div class="stat-item fade-up delay-4">
+          <div class="stat-icon"><i class="fas fa-shield-alt"></i></div>
+          <div class="stat-number" data-target="5">0</div>
+          <div class="stat-suffix">+ NĂM</div>
+          <div class="stat-label">BẢO HÀNH DÀI HẠN</div>
+          <p class="stat-desc">Bảo hành từ 3 – 5 năm, hỗ trợ nhanh chóng</p>
+        </div>
+        <div class="stat-item fade-up delay-4">
+          <div class="stat-icon"><i class="fas fa-users"></i></div>
+          <div class="stat-number" data-target="50">0</div>
+          <div class="stat-suffix">+</div>
+          <div class="stat-label">ĐỘI NGŨ CHUYÊN NGHIỆP</div>
+          <p class="stat-desc">Kỹ thuật tay nghề cao, tận tâm - trách nhiệm</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS SECTION ============ -->
+  <section class="process">
+    <div class="container">
+      <div class="section-label fade-up">QUY TRÌNH LÀM VIỆC</div>
+      <h2 class="section-title fade-up">Chuyên nghiệp – Minh bạch</h2>
+      <div class="process-timeline">
+        <div class="process-step fade-up delay-1">
+          <div class="step-number">01</div>
+          <h4>Khảo Sát</h4>
+          <p>Khảo sát thực tế, tư vấn giải pháp phù hợp</p>
+        </div>
+        <div class="process-step fade-up delay-2">
+          <div class="step-number">02</div>
+          <h4>Báo Giá</h4>
+          <p>Báo giá chi tiết, rõ ràng, minh bạch</p>
+        </div>
+        <div class="process-step fade-up delay-3">
+          <div class="step-number">03</div>
+          <h4>Thiết Kế</h4>
+          <p>Thiết kế bản vẽ 2D, 3D theo yêu cầu</p>
+        </div>
+        <div class="process-step fade-up delay-4">
+          <div class="step-number">04</div>
+          <h4>Thi Công</h4>
+          <p>Thi công đúng tiến độ, đảm bảo chất lượng</p>
+        </div>
+        <div class="process-step fade-up delay-4">
+          <div class="step-number">05</div>
+          <h4>Bàn Giao</h4>
+          <p>Nghiệm thu, bàn giao và bảo hành trọn đời</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ============ CTA SECTION ============ -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-text">
+        <h3>Bạn đang cần tư vấn giải pháp nhôm kính cho công trình của mình?</h3>
+        <p>Liên hệ ngay để được tư vấn và nhận báo giá tốt nhất!</p>
+      </div>
+      <div class="cta-buttons">
+        <a href="#" class="btn-dark" onclick="openModal(); return false;">NHẬN TƯ VẤN NGAY</a>
+        <a href="tel:0000000000" class="btn-dark-outline"><i class="fas fa-phone-alt"></i> 0XXX XXX XXX</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-about">
+          <a href="#" class="logo">
+            <div class="logo-icon">PQ</div>
+            <div class="logo-text">PQ VILLA<span>ALUMINIUM & GLASS</span></div>
+          </a>
+          <p>Chuyên thiết kế và thi công các hạng mục nhôm kính cao cấp cho nhà phố, biệt thự, dự án, văn phòng, khách
+            sạn.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Về Chúng Tôi</h4>
+          <a href="#">Giới thiệu</a>
+          <a href="#">Tầm nhìn sứ mệnh</a>
+          <a href="#">Đội ngũ nhân sự</a>
+          <a href="#">Xưởng sản xuất</a>
+        </div>
+        <div class="footer-col">
+          <h4>Sản Phẩm</h4>
+          <a href="#">Cửa mở quay</a>
+          <a href="#">Cửa lùa</a>
+          <a href="#">Cửa xếp trượt</a>
+          <a href="#">Vách kính</a>
+          <a href="#">Mặt dựng</a>
+        </div>
+        <div class="footer-col">
+          <h4>Hỗ Trợ</h4>
+          <a href="#">Chính sách bảo hành</a>
+          <a href="#">Hướng dẫn sử dụng</a>
+          <a href="#">Thanh toán</a>
+          <a href="#">Câu hỏi thường gặp</a>
+        </div>
+        <div class="footer-col">
+          <h4>Liên Hệ</h4>
+          <div class="footer-contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <p>Địa chỉ sẽ được cập nhật</p>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-envelope"></i>
+            <p>email@pqvilla.com</p>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <p>0XXX XXX XXX</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 PQ VILLA. All rights reserved.</p>
+        <p>Thiết kế bởi PQ VILLA Team</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ CONTACT MODAL ============ -->
+  <div class="modal-overlay" id="contactModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div class="modal-icon"><i class="fas fa-phone-alt"></i></div>
+      <h3>Liên hệ tư vấn</h3>
+      <p>Gọi ngay cho chúng tôi để được tư vấn miễn phí về giải pháp nhôm kính cao cấp!</p>
+      <div class="modal-phone">0XXX XXX XXX</div>
+      <a href="tel:0000000000" class="btn-gold modal-call-btn"><i class="fas fa-phone-alt"></i> GỌI NGAY</a>
+    </div>
+  </div>
+
+  <!-- ============ IMAGE LIGHTBOX ============ -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close">&times;</button>
+    <img src="" alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
