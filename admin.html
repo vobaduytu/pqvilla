@@ -11,31 +11,6 @@
     .admin-title { font-family: var(--font-heading); font-size: 2rem; margin-bottom: 8px; }
     .admin-subtitle { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 30px; }
 
-    /* Settings */
-    .settings-bar {
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      border-radius: 12px; padding: 20px; margin-bottom: 30px;
-    }
-    .settings-bar summary {
-      cursor: pointer; color: var(--accent); font-weight: 600; font-size: 0.85rem;
-      letter-spacing: 0.5px;
-    }
-    .settings-bar .settings-content { margin-top: 16px; }
-    .settings-bar input {
-      width: 100%; padding: 10px 14px; margin-top: 8px;
-      background: var(--bg-primary); border: 1px solid var(--glass-border);
-      border-radius: 6px; color: var(--text-primary); font-family: monospace; font-size: 0.85rem;
-    }
-    .settings-bar input:focus { outline: none; border-color: var(--accent); }
-    .settings-bar label { font-size: 0.8rem; color: var(--text-secondary); display: block; margin-top: 12px; }
-    .settings-bar .btn-save-settings {
-      margin-top: 14px; padding: 8px 20px; background: var(--accent); color: var(--bg-primary);
-      border: none; border-radius: 6px; font-weight: 600; font-size: 0.8rem; cursor: pointer;
-    }
-    .settings-status { font-size: 0.8rem; margin-top: 8px; }
-    .settings-status.ok { color: #2ecc71; }
-    .settings-status.error { color: #e74c3c; }
-
     /* Upload */
     .upload-area {
       border: 2px dashed var(--glass-border); border-radius: 16px;
@@ -43,7 +18,7 @@
       transition: var(--transition); margin-bottom: 30px; position: relative;
     }
     .upload-area:hover, .upload-area.dragover { border-color: var(--accent); background: rgba(200,155,94,0.05); }
-    .upload-area i { font-size: 3rem; color: var(--accent); margin-bottom: 16px; display: block; }
+    .upload-area i.upload-icon { font-size: 3rem; color: var(--accent); margin-bottom: 16px; display: block; }
     .upload-area p { color: var(--text-secondary); font-size: 0.9rem; }
     .upload-area small { display: block; margin-top: 8px; color: var(--text-secondary); opacity: 0.6; font-size: 0.8rem; }
     .upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
@@ -76,18 +51,15 @@
     .btn-upload:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
 
     /* Status */
-    .upload-status {
-      display:none; margin-top:20px; padding:20px; border-radius:12px; text-align:center;
-    }
+    .upload-status { display:none; margin-top:20px; padding:20px; border-radius:12px; text-align:center; }
     .upload-status.show { display: block; }
     .upload-status.success { background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.3); }
     .upload-status.error { background:rgba(231,76,60,0.1); border:1px solid rgba(231,76,60,0.3); }
     .upload-status i { font-size:2rem; margin-bottom:10px; display:block; }
     .upload-status.success i { color:#2ecc71; }
     .upload-status.error i { color:#e74c3c; }
-    .upload-status p { font-size:0.9rem; }
 
-    /* Product list */
+    /* Existing products */
     .existing-products { margin-top: 60px; }
     .existing-products h2 { font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 20px; }
     .existing-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:16px; }
@@ -128,26 +100,12 @@
 
   <div class="admin-page">
     <h1 class="admin-title"><i class="fas fa-plus-circle" style="color:var(--accent)"></i> Thêm Sản Phẩm</h1>
-    <p class="admin-subtitle">Upload ảnh + nhập thông tin → tự động lưu lên web, không cần deploy thủ công</p>
-
-    <!-- Settings -->
-    <details class="settings-bar" id="settingsBar">
-      <summary><i class="fas fa-cog"></i> Cài đặt GitHub Token (chỉ cần làm 1 lần)</summary>
-      <div class="settings-content">
-        <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:8px;">
-          Cần GitHub Token để tự động upload. <a href="https://github.com/settings/tokens/new?scopes=repo&description=PQ+VILLA+Admin" target="_blank" style="color:var(--accent);">Tạo token tại đây →</a>
-        </p>
-        <label>GitHub Personal Access Token</label>
-        <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-        <button class="btn-save-settings" onclick="saveSettings()">Lưu Token</button>
-        <p class="settings-status" id="settingsStatus"></p>
-      </div>
-    </details>
+    <p class="admin-subtitle">Upload ảnh + nhập thông tin → tự động cập nhật web (dùng được trên mọi thiết bị)</p>
 
     <!-- Upload -->
     <div class="upload-area" id="uploadArea">
       <input type="file" id="fileInput" accept="image/*">
-      <i class="fas fa-cloud-upload-alt"></i>
+      <i class="fas fa-cloud-upload-alt upload-icon"></i>
       <p>Kéo thả ảnh vào đây hoặc <strong style="color:var(--accent)">click để chọn</strong></p>
       <small>PNG, JPG, WebP — Khuyến nghị 600×450px</small>
     </div>
@@ -198,31 +156,9 @@
   </div>
 
   <script>
-    const REPO = 'vobaduytu/pqvilla';
-    const BRANCH = 'main';
     let selectedFile = null;
     let selectedFileName = '';
     let fileBase64 = '';
-
-    // ============ SETTINGS ============
-    function saveSettings() {
-      const token = document.getElementById('githubToken').value.trim();
-      if (!token) { showSettingsStatus('Vui lòng nhập token!', false); return; }
-      localStorage.setItem('pqvilla_github_token', token);
-      showSettingsStatus('✅ Đã lưu token thành công!', true);
-      document.getElementById('settingsBar').open = false;
-      loadExistingProducts();
-    }
-
-    function getToken() {
-      return localStorage.getItem('pqvilla_github_token') || '';
-    }
-
-    function showSettingsStatus(msg, ok) {
-      const el = document.getElementById('settingsStatus');
-      el.textContent = msg;
-      el.className = 'settings-status ' + (ok ? 'ok' : 'error');
-    }
 
     // ============ FILE UPLOAD ============
     const uploadArea = document.getElementById('uploadArea');
@@ -249,7 +185,6 @@
         document.getElementById('previewFilename').classList.add('show');
         document.getElementById('btnChange').classList.add('show');
         uploadArea.style.display = 'none';
-        // Store base64 (remove data:image/xxx;base64, prefix)
         fileBase64 = e.target.result.split(',')[1];
       };
       reader.readAsDataURL(file);
@@ -262,30 +197,8 @@
       selectedFile = null; selectedFileName = ''; fileBase64 = '';
     }
 
-    // ============ GITHUB API ============
-    async function githubAPI(path, method, body) {
-      const token = getToken();
-      const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
-        method: method || 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          'Accept': 'application/vnd.github.v3+json'
-        },
-        body: body ? JSON.stringify(body) : undefined
-      });
-      return res.json();
-    }
-
     // ============ UPLOAD PRODUCT ============
     async function uploadProduct() {
-      const token = getToken();
-      if (!token) {
-        document.getElementById('settingsBar').open = true;
-        alert('Vui lòng cài đặt GitHub Token trước!');
-        return;
-      }
-
       const name = document.getElementById('productName').value.trim();
       const category = document.getElementById('productCategory').value;
       const desc = document.getElementById('productDesc').value.trim() || 'Sản phẩm nhôm kính cao cấp.';
@@ -298,55 +211,59 @@
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> &nbsp; ĐANG UPLOAD...';
 
       try {
-        // 1. Upload image to GitHub
-        const imgPath = `images/products/${selectedFileName}`;
-        await githubAPI(imgPath, 'PUT', {
-          message: `Thêm ảnh sản phẩm: ${selectedFileName}`,
-          content: fileBase64,
-          branch: BRANCH
+        const res = await fetch('/.netlify/functions/product-api', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'upload',
+            name: name,
+            category: category,
+            description: desc,
+            image: fileBase64,
+            filename: selectedFileName
+          })
         });
 
-        // 2. Get current products-data.json
-        const dataFile = await githubAPI('products-data.json');
-        const currentData = JSON.parse(atob(dataFile.content.replace(/\n/g, '')));
+        const result = await res.json();
 
-        // 3. Add new product
-        currentData.products.push({
-          name: name,
-          category: category,
-          description: desc,
-          image: imgPath
-        });
-
-        // 4. Update products-data.json on GitHub
-        const jsonContent = btoa(unescape(encodeURIComponent(JSON.stringify(currentData, null, 2))));
-        await githubAPI('products-data.json', 'PUT', {
-          message: `Thêm sản phẩm: ${name}`,
-          content: jsonContent,
-          sha: dataFile.sha,
-          branch: BRANCH
-        });
-
-        showStatus('success', `<i class="fas fa-check-circle"></i><p><strong>${name}</strong> đã được thêm thành công!<br><small style="color:var(--text-secondary)">Netlify sẽ tự động deploy trong 30-60 giây.</small></p>`);
-
-        // Reset form
-        document.getElementById('productName').value = '';
-        document.getElementById('productDesc').value = '';
-        resetUpload();
-        loadExistingProducts();
-
+        if (res.ok && result.success) {
+          showStatus('success', `<i class="fas fa-check-circle"></i><p><strong>${name}</strong> đã được thêm thành công!<br><small style="color:var(--text-secondary)">Website sẽ tự cập nhật sau 30-60 giây.</small></p>`);
+          document.getElementById('productName').value = '';
+          document.getElementById('productDesc').value = '';
+          resetUpload();
+          setTimeout(loadExistingProducts, 2000);
+        } else {
+          showStatus('error', `<i class="fas fa-times-circle"></i><p>Lỗi: ${result.error || 'Không rõ'}</p>`);
+        }
       } catch (err) {
-        showStatus('error', `<i class="fas fa-times-circle"></i><p>Lỗi: ${err.message}<br><small>Kiểm tra lại GitHub Token.</small></p>`);
+        showStatus('error', `<i class="fas fa-times-circle"></i><p>Lỗi kết nối: ${err.message}</p>`);
       }
 
       btn.disabled = false;
       btn.innerHTML = '<i class="fas fa-rocket"></i> &nbsp; UPLOAD & TỰ ĐỘNG CẬP NHẬT WEB';
     }
 
-    function showStatus(type, html) {
-      const el = document.getElementById('uploadStatus');
-      el.className = 'upload-status show ' + type;
-      el.innerHTML = html;
+    // ============ DELETE PRODUCT ============
+    async function deleteProduct(index) {
+      if (!confirm('Bạn chắc chắn muốn xóa sản phẩm này?')) return;
+
+      try {
+        const res = await fetch('/.netlify/functions/product-api', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'delete', index: index })
+        });
+        const result = await res.json();
+
+        if (res.ok && result.success) {
+          showStatus('success', `<i class="fas fa-check-circle"></i><p>${result.message}</p>`);
+          loadExistingProducts();
+        } else {
+          alert('Lỗi: ' + (result.error || 'Không rõ'));
+        }
+      } catch (err) {
+        alert('Lỗi: ' + err.message);
+      }
     }
 
     // ============ LOAD EXISTING ============
@@ -363,7 +280,7 @@
 
         grid.innerHTML = data.products.map((p, i) => `
           <div class="existing-card">
-            <button class="btn-delete" onclick="deleteProduct(${i})" title="Xóa sản phẩm"><i class="fas fa-trash"></i></button>
+            <button class="btn-delete" onclick="deleteProduct(${i})" title="Xóa"><i class="fas fa-trash"></i></button>
             <img src="${p.image}" alt="${p.name}" loading="lazy">
             <div class="card-info">
               <h4>${p.name}</h4>
@@ -372,48 +289,17 @@
           </div>
         `).join('');
       } catch (e) {
-        document.getElementById('existingGrid').innerHTML = '<p style="color:var(--text-secondary)">Không tải được dữ liệu.</p>';
+        document.getElementById('existingGrid').innerHTML = '<p style="color:var(--text-secondary)">Không tải được.</p>';
       }
     }
 
-    // ============ DELETE PRODUCT ============
-    async function deleteProduct(index) {
-      if (!confirm('Bạn chắc chắn muốn xóa sản phẩm này?')) return;
-
-      const token = getToken();
-      if (!token) { alert('Cần GitHub Token để xóa!'); return; }
-
-      try {
-        const dataFile = await githubAPI('products-data.json');
-        const currentData = JSON.parse(atob(dataFile.content.replace(/\n/g, '')));
-        const removed = currentData.products.splice(index, 1)[0];
-
-        const jsonContent = btoa(unescape(encodeURIComponent(JSON.stringify(currentData, null, 2))));
-        await githubAPI('products-data.json', 'PUT', {
-          message: `Xóa sản phẩm: ${removed.name}`,
-          content: jsonContent,
-          sha: dataFile.sha,
-          branch: BRANCH
-        });
-
-        showStatus('success', `<i class="fas fa-check-circle"></i><p>Đã xóa <strong>${removed.name}</strong></p>`);
-        loadExistingProducts();
-      } catch (err) {
-        alert('Lỗi khi xóa: ' + err.message);
-      }
+    function showStatus(type, html) {
+      const el = document.getElementById('uploadStatus');
+      el.className = 'upload-status show ' + type;
+      el.innerHTML = html;
     }
 
-    // Init
-    window.addEventListener('DOMContentLoaded', () => {
-      const token = getToken();
-      if (token) {
-        document.getElementById('githubToken').value = token;
-        showSettingsStatus('✅ Token đã lưu', true);
-      } else {
-        document.getElementById('settingsBar').open = true;
-      }
-      loadExistingProducts();
-    });
+    window.addEventListener('DOMContentLoaded', loadExistingProducts);
   </script>
 
 </body>
