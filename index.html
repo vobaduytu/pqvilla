@@ -86,23 +86,6 @@
           Đang tải sản phẩm...
         </div>
       </div>
-      <script>
-        fetch('products-data.json')
-          .then(r => r.json())
-          .then(data => {
-            const grid = document.getElementById('homeProductsGrid');
-            if (!data.products || data.products.length === 0) return;
-            const latest = data.products.slice(-6).reverse();
-            grid.innerHTML = latest.map((p, i) => `
-              <div class="product-card fade-up delay-${(i % 4) + 1}">
-                <div class="product-img"><img src="${p.image}" alt="${p.name}" loading="lazy"></div>
-                <div class="product-icon"><i class="fas fa-cube"></i></div>
-                <h3>${p.name}</h3>
-                <p>${p.description}</p>
-              </div>
-            `).join('');
-          });
-      </script>
       <a href="products.html" class="btn-outline">XEM TẤT CẢ SẢN PHẨM</a>
     </div>
   </section>
@@ -127,30 +110,6 @@
           Đang tải dự án...
         </div>
       </div>
-      <script>
-        fetch('projects-data.json')
-          .then(r => r.json())
-          .then(data => {
-            const grid = document.getElementById('projectsGrid');
-            if (!data.projects || data.projects.length === 0) {
-              grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-secondary);padding:40px;">Chưa có dự án nào.</p>';
-              return;
-            }
-            grid.innerHTML = data.projects.map((p, i) => `
-              <div class="project-card fade-up delay-${(i % 4) + 1}" data-category="${p.category}">
-                <img src="${p.image}" alt="${p.name}" loading="lazy">
-                <div class="project-overlay">
-                  <h4>${p.name}</h4><span>${p.location}</span>
-                </div>
-              </div>
-            `).join('');
-            // Re-init filter buttons
-            if (typeof initFilters === 'function') initFilters();
-          })
-          .catch(() => {
-            document.getElementById('projectsGrid').innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-secondary);padding:40px;">Không tải được dự án.</p>';
-          });
-      </script>
     </div>
   </section>
 
@@ -337,6 +296,57 @@
   <button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
 
   <script src="script.js"></script>
+  <script>
+    // Load sản phẩm mới nhất
+    fetch('products-data.json')
+      .then(r => r.json())
+      .then(data => {
+        const grid = document.getElementById('homeProductsGrid');
+        if (!grid || !data.products || data.products.length === 0) return;
+        const latest = data.products.slice(-6).reverse();
+        grid.innerHTML = latest.map((p, i) => `
+          <div class="product-card fade-up delay-${(i % 4) + 1}">
+            <div class="product-img"><img src="${p.image}" alt="${p.name}" loading="lazy"></div>
+            <div class="product-icon"><i class="fas fa-cube"></i></div>
+            <h3>${p.name}</h3>
+            <p>${p.description}</p>
+          </div>
+        `).join('');
+      })
+      .catch(e => console.error('Products error:', e));
+
+    // Load dự án
+    fetch('projects-data.json')
+      .then(r => r.json())
+      .then(data => {
+        const grid = document.getElementById('projectsGrid');
+        if (!grid) return;
+        if (!data.projects || data.projects.length === 0) {
+          grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-secondary);padding:40px;">Chưa có dự án nào.</p>';
+          return;
+        }
+        grid.innerHTML = data.projects.map((p, i) => `
+          <div class="project-card fade-up delay-${(i % 4) + 1}" data-category="${p.category}">
+            <img src="${p.image}" alt="${p.name}" loading="lazy">
+            <div class="project-overlay">
+              <h4>${p.name}</h4><span>${p.location}</span>
+            </div>
+          </div>
+        `).join('');
+        // Re-init filter buttons for dynamically loaded cards
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const filter = this.dataset.filter;
+            document.querySelectorAll('.project-card').forEach(card => {
+              card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
+            });
+          });
+        });
+      })
+      .catch(e => console.error('Projects error:', e));
+  </script>
 </body>
 
 </html>
