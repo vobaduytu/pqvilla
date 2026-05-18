@@ -47,6 +47,12 @@
       "location": "Hà Nội",
       "category": "van-phong",
       "image": "https://images.unsplash.com/photo-1577495508048-b635879837f1?w=600&h=450&fit=crop"
+    },
+    {
+      "name": "nhà chim",
+      "location": "",
+      "category": "nha-pho",
+      "image": "images/projects/thumb4d906a7c.png"
     }
   ]
 }
