@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PQ VILLA - Quản Lý Sản Phẩm</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .admin-page { padding: 100px 20px 60px; max-width: 900px; margin: 0 auto; min-height: 100vh; }
+    .admin-title { font-family: var(--font-heading); font-size: 2rem; margin-bottom: 8px; }
+    .admin-subtitle { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 30px; }
+
+    /* Settings */
+    .settings-bar {
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: 12px; padding: 20px; margin-bottom: 30px;
+    }
+    .settings-bar summary {
+      cursor: pointer; color: var(--accent); font-weight: 600; font-size: 0.85rem;
+      letter-spacing: 0.5px;
+    }
+    .settings-bar .settings-content { margin-top: 16px; }
+    .settings-bar input {
+      width: 100%; padding: 10px 14px; margin-top: 8px;
+      background: var(--bg-primary); border: 1px solid var(--glass-border);
+      border-radius: 6px; color: var(--text-primary); font-family: monospace; font-size: 0.85rem;
+    }
+    .settings-bar input:focus { outline: none; border-color: var(--accent); }
+    .settings-bar label { font-size: 0.8rem; color: var(--text-secondary); display: block; margin-top: 12px; }
+    .settings-bar .btn-save-settings {
+      margin-top: 14px; padding: 8px 20px; background: var(--accent); color: var(--bg-primary);
+      border: none; border-radius: 6px; font-weight: 600; font-size: 0.8rem; cursor: pointer;
+    }
+    .settings-status { font-size: 0.8rem; margin-top: 8px; }
+    .settings-status.ok { color: #2ecc71; }
+    .settings-status.error { color: #e74c3c; }
+
+    /* Upload */
+    .upload-area {
+      border: 2px dashed var(--glass-border); border-radius: 16px;
+      padding: 50px 30px; text-align: center; cursor: pointer;
+      transition: var(--transition); margin-bottom: 30px; position: relative;
+    }
+    .upload-area:hover, .upload-area.dragover { border-color: var(--accent); background: rgba(200,155,94,0.05); }
+    .upload-area i { font-size: 3rem; color: var(--accent); margin-bottom: 16px; display: block; }
+    .upload-area p { color: var(--text-secondary); font-size: 0.9rem; }
+    .upload-area small { display: block; margin-top: 8px; color: var(--text-secondary); opacity: 0.6; font-size: 0.8rem; }
+    .upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+    .preview-img { display:none; width:200px; height:150px; object-fit:cover; border-radius:10px; margin:0 auto 16px; border:2px solid var(--accent); }
+    .preview-img.show { display: block; }
+    .preview-filename { display:none; text-align:center; color:var(--accent); font-size:0.85rem; margin-bottom:8px; }
+    .preview-filename.show { display: block; }
+    .btn-change { display:none; margin:0 auto 30px; padding:8px 20px; background:none; border:1px solid var(--glass-border); color:var(--text-secondary); border-radius:6px; font-size:0.8rem; cursor:pointer; }
+    .btn-change.show { display: block; }
+
+    /* Form */
+    .product-form { display: grid; gap: 20px; margin-bottom: 30px; }
+    .form-group label { display:block; font-size:0.85rem; font-weight:600; margin-bottom:8px; color:var(--text-secondary); }
+    .form-group input, .form-group select, .form-group textarea {
+      width:100%; padding:12px 16px; background:var(--glass-bg); border:1px solid var(--glass-border);
+      border-radius:8px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline:none; border-color:var(--accent); }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    /* Button */
+    .btn-upload {
+      width:100%; padding:16px; border:none; border-radius:10px; cursor:pointer;
+      font-size:1rem; font-weight:700; letter-spacing:1px; transition:var(--transition);
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: var(--bg-primary);
+    }
+    .btn-upload:hover { transform:translateY(-2px); box-shadow:var(--gold-glow); }
+    .btn-upload:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+    /* Status */
+    .upload-status {
+      display:none; margin-top:20px; padding:20px; border-radius:12px; text-align:center;
+    }
+    .upload-status.show { display: block; }
+    .upload-status.success { background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.3); }
+    .upload-status.error { background:rgba(231,76,60,0.1); border:1px solid rgba(231,76,60,0.3); }
+    .upload-status i { font-size:2rem; margin-bottom:10px; display:block; }
+    .upload-status.success i { color:#2ecc71; }
+    .upload-status.error i { color:#e74c3c; }
+    .upload-status p { font-size:0.9rem; }
+
+    /* Product list */
+    .existing-products { margin-top: 60px; }
+    .existing-products h2 { font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 20px; }
+    .existing-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:16px; }
+    .existing-card {
+      background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:10px;
+      overflow:hidden; position:relative;
+    }
+    .existing-card img { width:100%; aspect-ratio:4/3; object-fit:cover; }
+    .existing-card .card-info { padding:12px; }
+    .existing-card h4 { font-size:0.8rem; font-weight:600; margin-bottom:4px; }
+    .existing-card span { font-size:0.7rem; color:var(--accent); }
+    .existing-card .btn-delete {
+      position:absolute; top:8px; right:8px; width:28px; height:28px; border-radius:50%;
+      background:rgba(231,76,60,0.9); color:#fff; border:none; cursor:pointer;
+      display:flex; align-items:center; justify-content:center; font-size:0.75rem;
+      opacity:0; transition:var(--transition);
+    }
+    .existing-card:hover .btn-delete { opacity: 1; }
+
+    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">PQ</div>
+        <div class="logo-text">PQ VILLA<span>ALUMINIUM & GLASS</span></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Trang Chủ</a></li>
+        <li><a href="products.html">Sản Phẩm</a></li>
+        <li><a href="admin.html" class="active">Quản Lý</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="admin-page">
+    <h1 class="admin-title"><i class="fas fa-plus-circle" style="color:var(--accent)"></i> Thêm Sản Phẩm</h1>
+    <p class="admin-subtitle">Upload ảnh + nhập thông tin → tự động lưu lên web, không cần deploy thủ công</p>
+
+    <!-- Settings -->
+    <details class="settings-bar" id="settingsBar">
+      <summary><i class="fas fa-cog"></i> Cài đặt GitHub Token (chỉ cần làm 1 lần)</summary>
+      <div class="settings-content">
+        <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:8px;">
+          Cần GitHub Token để tự động upload. <a href="https://github.com/settings/tokens/new?scopes=repo&description=PQ+VILLA+Admin" target="_blank" style="color:var(--accent);">Tạo token tại đây →</a>
+        </p>
+        <label>GitHub Personal Access Token</label>
+        <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+        <button class="btn-save-settings" onclick="saveSettings()">Lưu Token</button>
+        <p class="settings-status" id="settingsStatus"></p>
+      </div>
+    </details>
+
+    <!-- Upload -->
+    <div class="upload-area" id="uploadArea">
+      <input type="file" id="fileInput" accept="image/*">
+      <i class="fas fa-cloud-upload-alt"></i>
+      <p>Kéo thả ảnh vào đây hoặc <strong style="color:var(--accent)">click để chọn</strong></p>
+      <small>PNG, JPG, WebP — Khuyến nghị 600×450px</small>
+    </div>
+    <img class="preview-img" id="previewImg" src="" alt="Preview">
+    <p class="preview-filename" id="previewFilename"></p>
+    <button class="btn-change" id="btnChange" onclick="resetUpload()">Đổi ảnh khác</button>
+
+    <!-- Form -->
+    <div class="product-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tên sản phẩm *</label>
+          <input type="text" id="productName" placeholder="VD: Cửa Mở Quay Nhôm Cao Cấp">
+        </div>
+        <div class="form-group">
+          <label>Danh mục</label>
+          <select id="productCategory">
+            <option value="CỬA NHÔM">CỬA NHÔM</option>
+            <option value="VÁCH KÍNH">VÁCH KÍNH</option>
+            <option value="MẶT DỰNG">MẶT DỰNG</option>
+            <option value="LAN CAN">LAN CAN</option>
+            <option value="MÁI KÍNH">MÁI KÍNH</option>
+            <option value="CỬA CUỐN">CỬA CUỐN</option>
+            <option value="PHỤ KIỆN">PHỤ KIỆN</option>
+            <option value="KHÁC">KHÁC</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Mô tả ngắn</label>
+        <textarea id="productDesc" placeholder="Mô tả sản phẩm..."></textarea>
+      </div>
+    </div>
+
+    <button class="btn-upload" id="btnUpload" onclick="uploadProduct()">
+      <i class="fas fa-rocket"></i> &nbsp; UPLOAD & TỰ ĐỘNG CẬP NHẬT WEB
+    </button>
+
+    <div class="upload-status" id="uploadStatus"></div>
+
+    <!-- Existing Products -->
+    <div class="existing-products">
+      <h2>Sản phẩm hiện tại</h2>
+      <div class="existing-grid" id="existingGrid">
+        <p style="color:var(--text-secondary); font-size:0.85rem;">Đang tải...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const REPO = 'vobaduytu/pqvilla';
+    const BRANCH = 'main';
+    let selectedFile = null;
+    let selectedFileName = '';
+    let fileBase64 = '';
+
+    // ============ SETTINGS ============
+    function saveSettings() {
+      const token = document.getElementById('githubToken').value.trim();
+      if (!token) { showSettingsStatus('Vui lòng nhập token!', false); return; }
+      localStorage.setItem('pqvilla_github_token', token);
+      showSettingsStatus('✅ Đã lưu token thành công!', true);
+      document.getElementById('settingsBar').open = false;
+      loadExistingProducts();
+    }
+
+    function getToken() {
+      return localStorage.getItem('pqvilla_github_token') || '';
+    }
+
+    function showSettingsStatus(msg, ok) {
+      const el = document.getElementById('settingsStatus');
+      el.textContent = msg;
+      el.className = 'settings-status ' + (ok ? 'ok' : 'error');
+    }
+
+    // ============ FILE UPLOAD ============
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+
+    uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+    uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+    uploadArea.addEventListener('drop', e => {
+      e.preventDefault(); uploadArea.classList.remove('dragover');
+      if (e.dataTransfer.files.length) { fileInput.files = e.dataTransfer.files; handleFile(e.dataTransfer.files[0]); }
+    });
+    fileInput.addEventListener('change', e => { if (e.target.files.length) handleFile(e.target.files[0]); });
+
+    function handleFile(file) {
+      if (!file.type.startsWith('image/')) { alert('Vui lòng chọn file ảnh!'); return; }
+      selectedFile = file;
+      selectedFileName = file.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-\.]/g, '');
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('previewImg').src = e.target.result;
+        document.getElementById('previewImg').classList.add('show');
+        document.getElementById('previewFilename').textContent = '📁 ' + selectedFileName;
+        document.getElementById('previewFilename').classList.add('show');
+        document.getElementById('btnChange').classList.add('show');
+        uploadArea.style.display = 'none';
+        // Store base64 (remove data:image/xxx;base64, prefix)
+        fileBase64 = e.target.result.split(',')[1];
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function resetUpload() {
+      ['previewImg','previewFilename','btnChange'].forEach(id => document.getElementById(id).classList.remove('show'));
+      uploadArea.style.display = '';
+      fileInput.value = '';
+      selectedFile = null; selectedFileName = ''; fileBase64 = '';
+    }
+
+    // ============ GITHUB API ============
+    async function githubAPI(path, method, body) {
+      const token = getToken();
+      const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+        method: method || 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/vnd.github.v3+json'
+        },
+        body: body ? JSON.stringify(body) : undefined
+      });
+      return res.json();
+    }
+
+    // ============ UPLOAD PRODUCT ============
+    async function uploadProduct() {
+      const token = getToken();
+      if (!token) {
+        document.getElementById('settingsBar').open = true;
+        alert('Vui lòng cài đặt GitHub Token trước!');
+        return;
+      }
+
+      const name = document.getElementById('productName').value.trim();
+      const category = document.getElementById('productCategory').value;
+      const desc = document.getElementById('productDesc').value.trim() || 'Sản phẩm nhôm kính cao cấp.';
+
+      if (!name) { alert('Vui lòng nhập tên sản phẩm!'); return; }
+      if (!selectedFile) { alert('Vui lòng chọn ảnh sản phẩm!'); return; }
+
+      const btn = document.getElementById('btnUpload');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> &nbsp; ĐANG UPLOAD...';
+
+      try {
+        // 1. Upload image to GitHub
+        const imgPath = `images/products/${selectedFileName}`;
+        await githubAPI(imgPath, 'PUT', {
+          message: `Thêm ảnh sản phẩm: ${selectedFileName}`,
+          content: fileBase64,
+          branch: BRANCH
+        });
+
+        // 2. Get current products-data.json
+        const dataFile = await githubAPI('products-data.json');
+        const currentData = JSON.parse(atob(dataFile.content.replace(/\n/g, '')));
+
+        // 3. Add new product
+        currentData.products.push({
+          name: name,
+          category: category,
+          description: desc,
+          image: imgPath
+        });
+
+        // 4. Update products-data.json on GitHub
+        const jsonContent = btoa(unescape(encodeURIComponent(JSON.stringify(currentData, null, 2))));
+        await githubAPI('products-data.json', 'PUT', {
+          message: `Thêm sản phẩm: ${name}`,
+          content: jsonContent,
+          sha: dataFile.sha,
+          branch: BRANCH
+        });
+
+        showStatus('success', `<i class="fas fa-check-circle"></i><p><strong>${name}</strong> đã được thêm thành công!<br><small style="color:var(--text-secondary)">Netlify sẽ tự động deploy trong 30-60 giây.</small></p>`);
+
+        // Reset form
+        document.getElementById('productName').value = '';
+        document.getElementById('productDesc').value = '';
+        resetUpload();
+        loadExistingProducts();
+
+      } catch (err) {
+        showStatus('error', `<i class="fas fa-times-circle"></i><p>Lỗi: ${err.message}<br><small>Kiểm tra lại GitHub Token.</small></p>`);
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-rocket"></i> &nbsp; UPLOAD & TỰ ĐỘNG CẬP NHẬT WEB';
+    }
+
+    function showStatus(type, html) {
+      const el = document.getElementById('uploadStatus');
+      el.className = 'upload-status show ' + type;
+      el.innerHTML = html;
+    }
+
+    // ============ LOAD EXISTING ============
+    async function loadExistingProducts() {
+      try {
+        const res = await fetch('products-data.json?t=' + Date.now());
+        const data = await res.json();
+        const grid = document.getElementById('existingGrid');
+
+        if (!data.products || data.products.length === 0) {
+          grid.innerHTML = '<p style="color:var(--text-secondary)">Chưa có sản phẩm nào.</p>';
+          return;
+        }
+
+        grid.innerHTML = data.products.map((p, i) => `
+          <div class="existing-card">
+            <button class="btn-delete" onclick="deleteProduct(${i})" title="Xóa sản phẩm"><i class="fas fa-trash"></i></button>
+            <img src="${p.image}" alt="${p.name}" loading="lazy">
+            <div class="card-info">
+              <h4>${p.name}</h4>
+              <span>${p.category}</span>
+            </div>
+          </div>
+        `).join('');
+      } catch (e) {
+        document.getElementById('existingGrid').innerHTML = '<p style="color:var(--text-secondary)">Không tải được dữ liệu.</p>';
+      }
+    }
+
+    // ============ DELETE PRODUCT ============
+    async function deleteProduct(index) {
+      if (!confirm('Bạn chắc chắn muốn xóa sản phẩm này?')) return;
+
+      const token = getToken();
+      if (!token) { alert('Cần GitHub Token để xóa!'); return; }
+
+      try {
+        const dataFile = await githubAPI('products-data.json');
+        const currentData = JSON.parse(atob(dataFile.content.replace(/\n/g, '')));
+        const removed = currentData.products.splice(index, 1)[0];
+
+        const jsonContent = btoa(unescape(encodeURIComponent(JSON.stringify(currentData, null, 2))));
+        await githubAPI('products-data.json', 'PUT', {
+          message: `Xóa sản phẩm: ${removed.name}`,
+          content: jsonContent,
+          sha: dataFile.sha,
+          branch: BRANCH
+        });
+
+        showStatus('success', `<i class="fas fa-check-circle"></i><p>Đã xóa <strong>${removed.name}</strong></p>`);
+        loadExistingProducts();
+      } catch (err) {
+        alert('Lỗi khi xóa: ' + err.message);
+      }
+    }
+
+    // Init
+    window.addEventListener('DOMContentLoaded', () => {
+      const token = getToken();
+      if (token) {
+        document.getElementById('githubToken').value = token;
+        showSettingsStatus('✅ Token đã lưu', true);
+      } else {
+        document.getElementById('settingsBar').open = true;
+      }
+      loadExistingProducts();
+    });
+  </script>
+
+</body>
+</html>

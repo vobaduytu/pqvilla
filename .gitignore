@@ -13,3 +13,6 @@ luxury_nhom_kinh_website_design_spec.md
 Thumbs.db
 .DS_Store
 desktop.ini
+
+# Local Netlify folder
+.netlify

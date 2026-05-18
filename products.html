@@ -177,99 +177,41 @@
   <!-- ============ PRODUCT LIST ============ -->
   <section class="product-list">
     <div class="container">
-      <div class="product-list-grid">
-
-        <!-- ========== SẢN PHẨM 1 ========== -->
-        <!-- HƯỚNG DẪN: Copy từ dòng "SẢN PHẨM" đến "/SẢN PHẨM" để thêm sản phẩm mới -->
-        <div class="product-item">
-          <div class="product-item-img">
-            <img src="images/products/cua-mo-quay.png" alt="Cửa Mở Quay Nhôm Cao Cấp">
-          </div>
-          <div class="product-item-info">
-            <span class="product-item-tag">CỬA NHÔM</span>
-            <h3>Cửa Mở Quay Nhôm Cao Cấp</h3>
-            <p>Hệ cửa mở quay nhôm cao cấp với thiết kế hiện đại, độ bền vượt trội, phù hợp cho biệt thự và nhà phố.</p>
-          </div>
+      <div class="product-list-grid" id="productGrid">
+        <!-- Sản phẩm được tải tự động từ products-data.json -->
+        <div style="grid-column: 1/-1; text-align:center; padding:40px; color:var(--text-secondary);">
+          <i class="fas fa-spinner fa-spin" style="font-size:2rem; color:var(--accent); margin-bottom:16px; display:block;"></i>
+          Đang tải sản phẩm...
         </div>
-        <!-- /SẢN PHẨM 1 -->
+      </div>
 
-        <!-- ========== SẢN PHẨM 2 ========== -->
-        <div class="product-item">
-          <div class="product-item-img">
-            <img src="images/products/cua-lua.png" alt="Cửa Lùa Nhôm Kính">
-          </div>
-          <div class="product-item-info">
-            <span class="product-item-tag">CỬA NHÔM</span>
-            <h3>Cửa Lùa Nhôm Kính</h3>
-            <p>Cửa lùa vận hành êm ái, tiết kiệm không gian, thích hợp cho phòng khách và ban công.</p>
-          </div>
-        </div>
-        <!-- /SẢN PHẨM 2 -->
-
-        <!-- ========== SẢN PHẨM 3 ========== -->
-        <div class="product-item">
-          <div class="product-item-img">
-            <img src="images/products/cua-xep-truot.png" alt="Cửa Xếp Trượt">
-          </div>
-          <div class="product-item-info">
-            <span class="product-item-tag">CỬA NHÔM</span>
-            <h3>Cửa Xếp Trượt</h3>
-            <p>Không gian mở rộng tối đa, thẩm mỹ cao, phù hợp cho sảnh lớn, nhà hàng, biệt thự.</p>
-          </div>
-        </div>
-        <!-- /SẢN PHẨM 3 -->
-
-        <!-- ========== SẢN PHẨM 4 ========== -->
-        <div class="product-item">
-          <div class="product-item-img">
-            <img src="images/products/vach-kinh.png" alt="Vách Kính Văn Phòng">
-          </div>
-          <div class="product-item-info">
-            <span class="product-item-tag">VÁCH KÍNH</span>
-            <h3>Vách Kính Văn Phòng</h3>
-            <p>Giải pháp tối ưu cho văn phòng, nhà ở hiện đại với kính cường lực an toàn.</p>
-          </div>
-        </div>
-        <!-- /SẢN PHẨM 4 -->
-
-        <!-- ========== SẢN PHẨM 5 ========== -->
-        <div class="product-item">
-          <div class="product-item-img">
-            <img src="images/products/mat-dung.png" alt="Mặt Dựng Nhôm Kính">
-          </div>
-          <div class="product-item-info">
-            <span class="product-item-tag">MẶT DỰNG</span>
-            <h3>Mặt Dựng Nhôm Kính</h3>
-            <p>Thi công mặt dựng chuyên nghiệp, nâng tầm đẳng cấp công trình thương mại và dân dụng.</p>
-          </div>
-        </div>
-        <!-- /SẢN PHẨM 5 -->
-
-        <!--
-        ============================================================
-        HƯỚNG DẪN THÊM SẢN PHẨM MỚI:
-        
-        1. Copy block bên dưới
-        2. Dán vào TRƯỚC dòng "KẾT THÚC DANH SÁCH"
-        3. Thay đổi: src ảnh, alt, tag, tên, mô tả
-        4. Ảnh nên đặt trong thư mục images/products/
-        5. Kích thước ảnh khuyến nghị: 600x450px
-        
-        <div class="product-item">
-          <div class="product-item-img">
-            <img src="images/products/TEN-FILE-ANH.png" alt="Tên sản phẩm">
-          </div>
-          <div class="product-item-info">
-            <span class="product-item-tag">DANH MỤC</span>
-            <h3>Tên Sản Phẩm</h3>
-            <p>Mô tả ngắn về sản phẩm, tối đa 2-3 dòng.</p>
-          </div>
-        </div>
-        
-        ============================================================
-        -->
-
-        <!-- KẾT THÚC DANH SÁCH SẢN PHẨM -->
+      <script>
+        // Tự động tải sản phẩm từ products-data.json
+        fetch('products-data.json')
+          .then(r => r.json())
+          .then(data => {
+            const grid = document.getElementById('productGrid');
+            if (!data.products || data.products.length === 0) {
+              grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-secondary);padding:40px;">Chưa có sản phẩm nào.</p>';
+              return;
+            }
+            grid.innerHTML = data.products.map(p => `
+              <div class="product-item">
+                <div class="product-item-img">
+                  <img src="${p.image}" alt="${p.name}" loading="lazy">
+                </div>
+                <div class="product-item-info">
+                  <span class="product-item-tag">${p.category}</span>
+                  <h3>${p.name}</h3>
+                  <p>${p.description}</p>
+                </div>
+              </div>
+            `).join('');
+          })
+          .catch(() => {
+            document.getElementById('productGrid').innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-secondary);padding:40px;">Không tải được sản phẩm.</p>';
+          });
+      </script>
 
       </div>
     </div>
