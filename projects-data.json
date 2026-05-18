@@ -1,0 +1,52 @@
+{
+  "projects": [
+    {
+      "name": "Biệt thự Vinhomes Riverside",
+      "location": "Hà Nội",
+      "category": "biet-thu",
+      "image": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&h=450&fit=crop"
+    },
+    {
+      "name": "Nhà phố 5x20 - Quảng Bình",
+      "location": "Quảng Bình",
+      "category": "nha-pho",
+      "image": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=450&fit=crop"
+    },
+    {
+      "name": "Tòa nhà văn phòng - Đà Nẵng",
+      "location": "Đà Nẵng",
+      "category": "van-phong",
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=450&fit=crop"
+    },
+    {
+      "name": "Khách sạn The Sea",
+      "location": "Nha Trang",
+      "category": "khach-san",
+      "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=450&fit=crop"
+    },
+    {
+      "name": "Villa FLC - Sầm Sơn",
+      "location": "Thanh Hóa",
+      "category": "biet-thu",
+      "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=450&fit=crop"
+    },
+    {
+      "name": "Chung cư The Emerald",
+      "location": "Hà Nội",
+      "category": "chung-cu",
+      "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=450&fit=crop"
+    },
+    {
+      "name": "Nhà phố hiện đại - Đồng Hới",
+      "location": "Quảng Bình",
+      "category": "nha-pho",
+      "image": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=450&fit=crop"
+    },
+    {
+      "name": "Showroom BMW Lê Văn Lương",
+      "location": "Hà Nội",
+      "category": "van-phong",
+      "image": "https://images.unsplash.com/photo-1577495508048-b635879837f1?w=600&h=450&fit=crop"
+    }
+  ]
+}

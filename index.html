@@ -129,64 +129,36 @@
         <button class="filter-btn" data-filter="van-phong">Văn Phòng</button>
         <button class="filter-btn" data-filter="khach-san">Khách Sạn</button>
       </div>
-      <div class="projects-grid">
-        <div class="project-card fade-up delay-1" data-category="biet-thu">
-          <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&h=450&fit=crop"
-            alt="Biệt thự Vinhomes Riverside" loading="lazy">
-          <div class="project-overlay">
-            <h4>Biệt thự Vinhomes Riverside</h4><span>Hà Nội</span>
-          </div>
-        </div>
-        <div class="project-card fade-up delay-2" data-category="nha-pho">
-          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=450&fit=crop"
-            alt="Nhà phố 5x20 - Quảng Bình" loading="lazy">
-          <div class="project-overlay">
-            <h4>Nhà phố 5x20 - Quảng Bình</h4><span>Quảng Bình</span>
-          </div>
-        </div>
-        <div class="project-card fade-up delay-3" data-category="van-phong">
-          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=450&fit=crop"
-            alt="Tòa nhà văn phòng - Đà Nẵng" loading="lazy">
-          <div class="project-overlay">
-            <h4>Tòa nhà văn phòng - Đà Nẵng</h4><span>Đà Nẵng</span>
-          </div>
-        </div>
-        <div class="project-card fade-up delay-4" data-category="khach-san">
-          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=450&fit=crop"
-            alt="Khách sạn The Sea" loading="lazy">
-          <div class="project-overlay">
-            <h4>Khách sạn The Sea</h4><span>Nha Trang</span>
-          </div>
-        </div>
-        <div class="project-card fade-up delay-1" data-category="biet-thu">
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=450&fit=crop"
-            alt="Villa FLC - Sầm Sơn" loading="lazy">
-          <div class="project-overlay">
-            <h4>Villa FLC - Sầm Sơn</h4><span>Thanh Hóa</span>
-          </div>
-        </div>
-        <div class="project-card fade-up delay-2" data-category="chung-cu">
-          <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=450&fit=crop"
-            alt="Chung cư The Emerald" loading="lazy">
-          <div class="project-overlay">
-            <h4>Chung cư The Emerald</h4><span>Hà Nội</span>
-          </div>
-        </div>
-        <div class="project-card fade-up delay-3" data-category="nha-pho">
-          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=450&fit=crop"
-            alt="Nhà phố hiện đại - Đồng Hới" loading="lazy">
-          <div class="project-overlay">
-            <h4>Nhà phố hiện đại - Đồng Hới</h4><span>Quảng Bình</span>
-          </div>
-        </div>
-        <div class="project-card fade-up delay-4" data-category="van-phong">
-          <img src="https://images.unsplash.com/photo-1577495508048-b635879837f1?w=600&h=450&fit=crop"
-            alt="Showroom BMW Lê Văn Lương" loading="lazy">
-          <div class="project-overlay">
-            <h4>Showroom BMW Lê Văn Lương</h4><span>Hà Nội</span>
-          </div>
+      <div class="projects-grid" id="projectsGrid">
+        <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-secondary);">
+          <i class="fas fa-spinner fa-spin" style="font-size:2rem;color:var(--accent);display:block;margin-bottom:16px;"></i>
+          Đang tải dự án...
         </div>
       </div>
+      <script>
+        fetch('projects-data.json')
+          .then(r => r.json())
+          .then(data => {
+            const grid = document.getElementById('projectsGrid');
+            if (!data.projects || data.projects.length === 0) {
+              grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-secondary);padding:40px;">Chưa có dự án nào.</p>';
+              return;
+            }
+            grid.innerHTML = data.projects.map((p, i) => `
+              <div class="project-card fade-up delay-${(i % 4) + 1}" data-category="${p.category}">
+                <img src="${p.image}" alt="${p.name}" loading="lazy">
+                <div class="project-overlay">
+                  <h4>${p.name}</h4><span>${p.location}</span>
+                </div>
+              </div>
+            `).join('');
+            // Re-init filter buttons
+            if (typeof initFilters === 'function') initFilters();
+          })
+          .catch(() => {
+            document.getElementById('projectsGrid').innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-secondary);padding:40px;">Không tải được dự án.</p>';
+          });
+      </script>
     </div>
   </section>
 
