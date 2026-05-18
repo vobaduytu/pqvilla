@@ -305,7 +305,7 @@
         if (!grid || !data.products || data.products.length === 0) return;
         const latest = data.products.slice(-6).reverse();
         grid.innerHTML = latest.map((p, i) => `
-          <div class="product-card fade-up delay-${(i % 4) + 1}">
+          <div class="product-card fade-up visible">
             <div class="product-img"><img src="${p.image}" alt="${p.name}" loading="lazy"></div>
             <div class="product-icon"><i class="fas fa-cube"></i></div>
             <h3>${p.name}</h3>
@@ -326,7 +326,7 @@
           return;
         }
         grid.innerHTML = data.projects.map((p, i) => `
-          <div class="project-card fade-up delay-${(i % 4) + 1}" data-category="${p.category}">
+          <div class="project-card fade-up visible" data-category="${p.category}">
             <img src="${p.image}" alt="${p.name}" loading="lazy">
             <div class="project-overlay">
               <h4>${p.name}</h4><span>${p.location}</span>
