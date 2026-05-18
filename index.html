@@ -28,7 +28,7 @@
         <li><a href="#projects">Dự Án</a></li>
         <li><a href="#contact">Liên Hệ</a></li>
       </ul>
-      <a href="tel:0000000000" class="nav-phone"><i class="fas fa-phone-alt"></i> 0XXX XXX XXX</a>
+      <a href="tel:0000000000" class="nav-phone"><i class="fas fa-phone-alt"></i> 0962 777 317</a>
       <div class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </div>
@@ -43,7 +43,7 @@
     <a href="#products">Sản Phẩm</a>
     <a href="#projects">Dự Án</a>
     <a href="#contact">Liên Hệ</a>
-    <a href="tel:0000000000" class="nav-phone"><i class="fas fa-phone-alt"></i> 0XXX XXX XXX</a>
+    <a href="tel:0000000000" class="nav-phone"><i class="fas fa-phone-alt"></i> 0962 777 317</a>
   </div>
 
   <!-- ============ HERO SECTION ============ -->
@@ -79,39 +79,30 @@
     <div class="container">
       <div class="section-label fade-up">SẢN PHẨM</div>
       <h2 class="section-title fade-up">Danh mục sản phẩm</h2>
-      <div class="products-grid">
-        <div class="product-card fade-up delay-1">
-          <div class="product-img"><img src="images/products/cua-mo-quay.png" alt="Cửa mở quay" loading="lazy"></div>
-          <div class="product-icon"><i class="fas fa-door-open"></i></div>
-          <h3>Cửa Mở Quay</h3>
-          <p>Hệ dáng hệ nhôm cao cấp, độ bền vượt trội</p>
-        </div>
-        <div class="product-card fade-up delay-2">
-          <div class="product-img"><img src="images/products/cua-lua.png" alt="Cửa lùa" loading="lazy"></div>
-          <div class="product-icon"><i class="fas fa-arrows-alt-h"></i></div>
-          <h3>Cửa Lùa</h3>
-          <p>Vận hành êm ái, tiết kiệm không gian</p>
-        </div>
-        <div class="product-card fade-up delay-3">
-          <div class="product-img"><img src="images/products/cua-xep-truot.png" alt="Cửa xếp trượt" loading="lazy">
-          </div>
-          <div class="product-icon"><i class="fas fa-compress-arrows-alt"></i></div>
-          <h3>Cửa Xếp Trượt</h3>
-          <p>Không gian mở rộng, thẩm mỹ cao</p>
-        </div>
-        <div class="product-card fade-up delay-4">
-          <div class="product-img"><img src="images/products/vach-kinh.png" alt="Vách kính" loading="lazy"></div>
-          <div class="product-icon"><i class="fas fa-th-large"></i></div>
-          <h3>Vách Kính</h3>
-          <p>Giải pháp tối ưu cho văn phòng, nhà ở</p>
-        </div>
-        <div class="product-card fade-up delay-4">
-          <div class="product-img"><img src="images/products/mat-dung.png" alt="Mặt dựng" loading="lazy"></div>
-          <div class="product-icon"><i class="fas fa-building"></i></div>
-          <h3>Mặt Dựng</h3>
-          <p>Thi công chuyên nghiệp, đẳng cấp công trình</p>
+      <div class="products-grid" id="homeProductsGrid">
+        <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-secondary);">
+          <i class="fas fa-spinner fa-spin"
+            style="font-size:2rem;color:var(--accent);display:block;margin-bottom:16px;"></i>
+          Đang tải sản phẩm...
         </div>
       </div>
+      <script>
+        fetch('products-data.json')
+          .then(r => r.json())
+          .then(data => {
+            const grid = document.getElementById('homeProductsGrid');
+            if (!data.products || data.products.length === 0) return;
+            const latest = data.products.slice(-6).reverse();
+            grid.innerHTML = latest.map((p, i) => `
+              <div class="product-card fade-up delay-${(i % 4) + 1}">
+                <div class="product-img"><img src="${p.image}" alt="${p.name}" loading="lazy"></div>
+                <div class="product-icon"><i class="fas fa-cube"></i></div>
+                <h3>${p.name}</h3>
+                <p>${p.description}</p>
+              </div>
+            `).join('');
+          });
+      </script>
       <a href="products.html" class="btn-outline">XEM TẤT CẢ SẢN PHẨM</a>
     </div>
   </section>
@@ -131,7 +122,8 @@
       </div>
       <div class="projects-grid" id="projectsGrid">
         <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-secondary);">
-          <i class="fas fa-spinner fa-spin" style="font-size:2rem;color:var(--accent);display:block;margin-bottom:16px;"></i>
+          <i class="fas fa-spinner fa-spin"
+            style="font-size:2rem;color:var(--accent);display:block;margin-bottom:16px;"></i>
           Đang tải dự án...
         </div>
       </div>
@@ -253,7 +245,7 @@
       </div>
       <div class="cta-buttons">
         <a href="#" class="btn-dark" onclick="openModal(); return false;">NHẬN TƯ VẤN NGAY</a>
-        <a href="tel:0000000000" class="btn-dark-outline"><i class="fas fa-phone-alt"></i> 0XXX XXX XXX</a>
+        <a href="tel:0000000000" class="btn-dark-outline"><i class="fas fa-phone-alt"></i> 0962 777 317</a>
       </div>
     </div>
   </section>
@@ -270,10 +262,8 @@
           <p>Chuyên thiết kế và thi công các hạng mục nhôm kính cao cấp cho nhà phố, biệt thự, dự án, văn phòng, khách
             sạn.</p>
           <div class="footer-social">
-            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.facebook.com/nhomkinhkienminhphuquang" target="_blank" aria-label="Facebook"><i
+                class="fab fa-facebook-f"></i></a>
           </div>
         </div>
         <div class="footer-col">
@@ -301,16 +291,20 @@
         <div class="footer-col">
           <h4>Liên Hệ</h4>
           <div class="footer-contact-item">
-            <i class="fas fa-map-marker-alt"></i>
-            <p>Địa chỉ sẽ được cập nhật</p>
+            <i class="fas fa-store"></i>
+            <p><a
+                href="https://www.google.com/maps/place/54+Nguy%E1%BB%85n+H%E1%BB%AFu+C%E1%BA%A3nh,+%C4%90%E1%BB%93ng+H%E1%BB%9Bi,+Qu%E1%BA%A3ng+Tr%E1%BB%8B,+Vi%E1%BB%87t+Nam/@17.4624587,106.6162032,17z"
+                target="_blank" style="color:var(--text-secondary)">🏢 Showroom: 54 Nguyễn Hữu Cảnh, Đồng Hới</a></p>
           </div>
           <div class="footer-contact-item">
-            <i class="fas fa-envelope"></i>
-            <p>email@pqvilla.com</p>
+            <i class="fas fa-industry"></i>
+            <p><a
+                href="https://www.google.com/maps/place/L%C6%B0%C6%A1ng+Y%C3%AAn,+L%C6%B0%C6%A1ng+Ninh,+%C4%90%E1%BB%93ng+H%E1%BB%9Bi,+Qu%E1%BA%A3ng+Tr%E1%BB%8B,+Vi%E1%BB%87t+Nam/@17.4257684,106.6293095,15z/data=!3m1!4b1!4m6!3m5!1s0x314753fcbf80cedd:0xf1f48834ede9cae4!8m2!3d17.4251165!4d106.6387092!16s%2Fg%2F1tggq_qh?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D">🏭
+                Nhà xưởng: Xóm 5, Lương Yến, Lương Ninh</a></p>
           </div>
           <div class="footer-contact-item">
             <i class="fas fa-phone-alt"></i>
-            <p>0XXX XXX XXX</p>
+            <p><a href="tel:0962777317" style="color:var(--text-secondary)">0962 777 317</a></p>
           </div>
         </div>
       </div>
@@ -328,8 +322,8 @@
       <div class="modal-icon"><i class="fas fa-phone-alt"></i></div>
       <h3>Liên hệ tư vấn</h3>
       <p>Gọi ngay cho chúng tôi để được tư vấn miễn phí về giải pháp nhôm kính cao cấp!</p>
-      <div class="modal-phone">0XXX XXX XXX</div>
-      <a href="tel:0000000000" class="btn-gold modal-call-btn"><i class="fas fa-phone-alt"></i> GỌI NGAY</a>
+      <div class="modal-phone">0962 777 317</div>
+      <a href="tel:0962777317" class="btn-gold modal-call-btn"><i class="fas fa-phone-alt"></i> GỌI NGAY</a>
     </div>
   </div>
 
